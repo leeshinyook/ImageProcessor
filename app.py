@@ -1,5 +1,6 @@
 import os
 import sys
+import uuid
 sys.path.append('../')
 sys.path.append('../../')
 sys.path.append('../../../')
@@ -28,11 +29,15 @@ def get_image_from_internet(url):
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98\
         Safari/537.36'), }
         response = requests.get(url, headers=request_headers)
-        src = "./static/images/download.jpg"
+        print(url)
+        url = uuid.uuid3(uuid.NAMESPACE_URL, url)
+        src = "./static/images/" + str(url)
+        print(src)
         file = open(src, "wb")
         file.write(response.content)
         file.close()
     except Exception as ex:
+        print(ex)
         raise
     return src
 
@@ -51,7 +56,6 @@ def download_url():
                 raise
             src = get_image_from_internet(url)
             result = predict_image(src)
-            print(result)
             return render_template('index.html', filename=src, result=result)
     except Exception as ex:
         return render_template('index.html', warning_text=warning_text)
@@ -68,7 +72,6 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             src = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             result = predict_image(src)
-            print(result)
             return render_template('index.html', filename=src, result=result)
     except Exception as ex:
         return render_template('index.html', warning_text=warning_text)
