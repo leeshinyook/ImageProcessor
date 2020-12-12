@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Image classification</title>
+</head>
+<body>
+
+<div style="text-align: center">
+    <h1>Image classification</h1>
+    <p>
+    <form method="POST" action="/url" enctype="multipart/form-data">
+        <div>
+            <input type="text" name="url">
+            <button type="submit">Upload Image from URL</button>
+        </div>
+    </form>
+</p>
+<p>
+    <form method="POST" action="/upload" enctype="multipart/form-data">
+        <div>
+            <input type="file" name="file">
+            <button type="submit">Upload Image</button>
+        </div>
+    </form>
+</p>
+<div>
+    {% if filename %}
+    <h1><img src="{{filename}}" width="500px" height="300px"></h1>
+    {% else %}
+    <h2>이미지를 첨부하거나 URL을 입력해주세요.</h2>
+    {% endif %}
+    {% if warning_text %}
+    <h2 style="color: red">{{warning_text}}</h2>
+    {% endif %}
+</div>
+<p>
+    <div>
+    {% if result %}
+    <h3 style="color: blue">This image is : {{result}}</h3>
+    {% endif %}
+    </div>
+</p>
+</div>
+
+</body>
+</html>
